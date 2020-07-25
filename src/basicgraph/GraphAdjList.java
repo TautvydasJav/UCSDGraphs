@@ -13,7 +13,7 @@ import java.util.Set;
  * The edges of the graph are not labeled.
  * Representation of edges via adjacency lists.
  * 
- * @author UCSD MOOC development team and YOU
+ * @author UCSD MOOC development team and Jure Koren
  *
  */
 public class GraphAdjList extends Graph {
@@ -95,8 +95,27 @@ public class GraphAdjList extends Graph {
 	 * @return List<Integer> a list of indices of vertices.  
 	 */		
 	 public List<Integer> getDistance2(int v) {
-		 // XXX: Implement this method in week 2
-		 return null;
+		 /* For the list representation you'll use a hard-coded search 
+		  * to implement getDistance2(int v). In other words, first find 
+		  * the neighbors of v, and then expand them out for the two-hop 
+		  * cities. 
+		  * */
+		 
+		 List<Integer> vertices = new ArrayList<Integer>();
+		 
+		 // find 1st level n.
+		 List<Integer> level1 = new ArrayList<Integer>();
+		 level1 = getNeighbors(v);
+		 
+		 //vertices.addAll(level1);
+		 
+		 for (int i = 0; i < level1.size(); i ++) {
+			 List<Integer> level2 = getNeighbors(level1.get(i));
+			// add 2nd level neighbors
+			 vertices.addAll(level2);
+		 }
+		 
+		 return vertices;
 	}
 	
 	/**

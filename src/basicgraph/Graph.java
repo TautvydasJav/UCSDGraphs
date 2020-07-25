@@ -17,7 +17,7 @@ import util.GraphLoader;
  * The edges of the graph are not labeled.
  * Representation of edges is left abstract.
  * 
- * @author UCSD MOOC development team and YOU
+ * @author UCSD MOOC development team and Jure Koren
  * 
  */
 
@@ -122,7 +122,38 @@ public abstract class Graph {
 	 */
 	public List<Integer> degreeSequence() {
 		// XXX: Implement in part 1 of week 2
-		return null;
+		List<Integer> sequence = new ArrayList<Integer>();
+		
+		// loop through all the vertices
+		for (int v = 0; v < getNumVertices(); v ++) {
+			// get degree for vertex
+			sequence.add( vertexDegree(v) );
+		}
+		
+		Collections.sort(sequence, Collections.reverseOrder());
+		
+		return sequence;
+	}
+	
+	// get degrees for vertex
+	public int vertexDegree(int v) {
+		// the degree of a vertex is the sum of its in-degree and its out-degree
+		// In-degree: the in-degree of a vertex, v, is the number of edges with v as their endpoint.
+		// Out-degree: the out-degree of a vertex, v, is the number of edges with v as their start point.
+		// Edge: link
+		
+		List<Integer> outN = getNeighbors(v);
+		List<Integer> inN = getInNeighbors(v);
+		
+		int sum = 0;
+		
+		//sum += outN.stream().mapToInt(Integer::intValue).sum();
+		//sum += inN.stream().mapToInt(Integer::intValue).sum();
+		
+		sum += outN.size();
+		sum += inN.size();
+		
+		return sum;
 	}
 	
 	/**

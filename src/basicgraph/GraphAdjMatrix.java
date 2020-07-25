@@ -13,7 +13,7 @@ import java.util.Set;
  * The edges of the graph are not labeled.
  * Representation of edges via an adjacency matrix.
  * 
- * @author UCSD MOOC development team and YOU
+ * @author UCSD MOOC development team and Jure Koren
  *
  */
 public class GraphAdjMatrix extends Graph {
@@ -104,9 +104,47 @@ public class GraphAdjMatrix extends Graph {
 	 * @return List<Integer> a list of indices of vertices.  
 	 */	
 	public List<Integer> getDistance2(int v) {
-		// XXX Implement this method in week 2
-		return null;
+		/* For the matrix representation, getDistance2(int v) 
+		 * can be implemented with matrix multiplication (square 
+		 * the matrix then read the non-zero entries from the 
+		 * appropriate row). */
+		
+		// out list
+		List<Integer> vertices = new ArrayList<Integer>();
+		
+		// new result matrix
+		int [][] matrix = squareMatrix(adjMatrix);	
+		
+		// read row v
+		int[] row = matrix[v];
+		
+		for(int i = 0; i < row.length; i++) {
+			if (row[i]>0) {
+				for(int j = 0; j < row[i]; j++) {
+					vertices.add(i);
+				}
+			}
+		}
+		
+		return vertices;
 	}
+	
+	// multiply matrix
+	private int[][] squareMatrix(int[][] matrix0) {
+		// new result matrix
+		int [][] matrix = new int[matrix0.length][matrix0.length];
+		
+		// matrix multiplication
+		for (int i = 0; i < matrix0.length; i++) { 
+		    for (int j = 0; j < matrix0[0].length; j++) { 
+		        for (int k = 0; k < matrix0[0].length; k++) { 
+		        	matrix[i][j] += matrix0[i][k] * matrix0[k][j];
+		        }
+		    }
+		}
+		return matrix;
+	}
+	
 	
 	/**
 	 * Generate string representation of adjacency matrix
@@ -124,5 +162,4 @@ public class GraphAdjMatrix extends Graph {
 		}
 		return s;
 	}
-
 }
